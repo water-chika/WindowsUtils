@@ -39,10 +39,11 @@ public:
 
     }
     ~set_wallpaper_to_white() {
-        std::ranges::for_each(m_destroy_calls,
-            [](auto destroy_call) {
-                destroy_call();
-            });
+        while (!m_destroy_calls.empty()) {
+            auto& destroy_call = m_destroy_calls.back();
+            destroy_call();
+            m_destroy_calls.pop_back();
+        }
     }
 private:
     void initialize() {
