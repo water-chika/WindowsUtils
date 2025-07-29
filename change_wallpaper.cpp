@@ -18,16 +18,27 @@ namespace co {
 
 class set_wallpaper_to_white {
 public:
-    set_wallpaper_to_white() {
+    set_wallpaper_to_white(std::wstring wallpaper_path) {
         HRESULT hr;
         initialize();
         create_desktop_wallpaper();
-        hr = m_desktop_wallpaper->SetBackgroundColor(RGB(255, 255, 255));
-        if (hr != S_OK)
-        {
-            throw std::runtime_error{ "set background color fail" };
+        if (0) {
+            hr = m_desktop_wallpaper->SetBackgroundColor(RGB(255, 255, 255));
+            if (hr != S_OK)
+            {
+                throw std::runtime_error{ "set background color fail" };
+            }
+            hr = m_desktop_wallpaper->Enable(FALSE);
         }
-        hr = m_desktop_wallpaper->Enable(FALSE);
+        else {
+            hr = m_desktop_wallpaper->SetWallpaper(NULL, wallpaper_path.c_str());
+            if (hr != S_OK)
+            {
+                throw std::runtime_error{ "set background fail" };
+            }
+            hr = m_desktop_wallpaper->Enable(TRUE);
+        }
+
         if (hr != S_OK && hr != S_FALSE)
         {
             throw std::runtime_error{ "set background to color fail" };
@@ -79,10 +90,21 @@ private:
     IDesktopWallpaper* m_desktop_wallpaper;
 };
 
-int main()
+int main(int argc, const char** argv)
 {
+    std::setlocale(LC_ALL, "en_US.utf8");
+    std::wstring wallpaper_path;
+    if (argc == 1) {
+
+    }
+    else if (argc == 2) {
+        std::mbstate_t mbstate{};
+        std::vector<wchar_t> buf(strlen(argv[1]) + 1);
+        mbsrtowcs(buf.data(), argv + 1, buf.size(), &mbstate);
+        wallpaper_path = buf.data();
+    }
     try {
-        set_wallpaper_to_white{};
+        set_wallpaper_to_white{wallpaper_path};
     }
     catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
