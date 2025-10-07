@@ -1,0 +1,1 @@
+Set-PSReadlineOption -Edit "Emacs"
