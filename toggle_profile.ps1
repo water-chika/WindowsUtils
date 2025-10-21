@@ -1,25 +1,20 @@
 param(
-    $Value
+    [Parameter(ParameterSetName = 'Toggle')]
+    [switch]$Toggle,
+    [Parameter(ParameterSetName = 'Value')]
+    [string]$Value
 )
 
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Value $Value
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Value $Value
-
-if ($Value -eq 0) {
-    Enable-Display -DisplayId 3
-
-    Set-DisplayPrimary -DisplayId 3
-
-    Start-Sleep 2
-
-    Disable-Display -DisplayId 1
-    Disable-Display -DisplayId 2
+$theme_path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+$Value = $Value
+if ($Toggle) {
+    if (1 -eq (Get-ItemProperty -Path $theme_path -Name "SystemUsesLightTheme").SystemUsesLightTheme) {
+        $Value = 0
+    }
+    else {
+        $Value = 1
+    }
 }
-else {
-    Enable-Display -DisplayId 1
-    Enable-Display -DisplayId 2
 
-    Set-DisplayPrimary -DisplayId 2
-
-    Disable-Display -DisplayId 3
-}
+Set-ItemProperty -Path $theme_path -Name "SystemUsesLightTheme" -Value $Value
+Set-ItemProperty -Path $theme_path -Name "AppsUseLightTheme" -Value $Value
