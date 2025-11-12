@@ -1,11 +1,16 @@
 param(
     [Parameter(Mandatory=$true)]
     [string]$Path,
-    $ResolvePath = $true
+    $ResolvePath = $true,
+    $AddToCurrentEnv = $true
 )
 
 if ($ResolvePath) {
     $Path = Resolve-Path $Path
+}
+
+if ($AddToCurrentEnv) {
+	$env:PATH = "$Path;$env:PATH"
 }
 
 $Path = $Path + ";" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Machine)
