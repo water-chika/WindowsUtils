@@ -1,5 +1,5 @@
 ﻿param(
-    $CopyWaterKey=$false,
+    $CopyWaterKey=$true,
     $CheckIsAdministrator=$true
 )
 
@@ -32,5 +32,5 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP(public)" -ErrorAction Sil
 }
 
 if ($CopyWaterKey) {
-    scp $PSScriptRoot/water.pub $env:ProgramData/ssh/administrators_authorized_keys
+    cat $PSScriptRoot/water.pub >> $env:ProgramData/ssh/administrators_authorized_keys
 }
