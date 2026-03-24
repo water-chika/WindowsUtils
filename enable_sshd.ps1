@@ -32,5 +32,5 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP(public)" -ErrorAction Sil
 }
 
 if ($CopyWaterKey) {
-    cat $PSScriptRoot/water.pub >> $env:ProgramData/ssh/administrators_authorized_keys
+    Add-Content -Encoding utf8 -Path $env:ProgramData/ssh/administrators_authorized_keys -Value (Get-Content $PSScriptRoot/water.pub)
 }
