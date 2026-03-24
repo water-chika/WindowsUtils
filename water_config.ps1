@@ -5,3 +5,7 @@
 & $PSScriptRoot/set_chinese_dvorak_layout.ps1
 & $PSScriptRoot/set_windows_theme.ps1 0
 
+winget install --id Microsoft.PowerShell
+winget install --id Vim.Vim
+winget install --id Microsoft.VisualStudioCode
+
