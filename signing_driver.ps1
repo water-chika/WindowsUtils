@@ -8,6 +8,7 @@ Inf2Cat.exe /driver:$DriverDir /os:Vista_x64
 
 $cer_file = "testcert.cer"
 if (-not Get-Item $cer_file) {
+    # TODO: use New-SelfSignedCertificate
     MakeCert -r -pe -ss PrivateCertStore -n "CN=test.com(Test)" $cer_file
 }
 Signtool sign /v /fd sha256 /s PrivateCertStore /n 'Test.com(Test)' /t http://timestamp.digicert.com $File
