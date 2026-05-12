@@ -6,7 +6,7 @@
 & $PSScriptRoot/set_windows_theme.ps1 0
 & $PSScriptRoot/enable_dev_mode.ps1 0
 
-winget install --id Microsoft.PowerShell
-winget install --id Vim.Vim
-winget install --id Microsoft.VisualStudioCode
+winget install --id Microsoft.PowerShell --source winget
+winget install --id Vim.Vim --source winget
+winget install --id Microsoft.VisualStudioCode --source winget
 
