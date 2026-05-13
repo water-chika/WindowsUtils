@@ -10,4 +10,5 @@ winget install --id Microsoft.PowerShell --source winget
 winget install --id Vim.Vim --source winget
 & $PSScriptRoot/add_path.ps1 'C:/Program Files/Vim/vim92'
 winget install --id Microsoft.VisualStudioCode --source winget
+winget install --id GlavSoft.TightVNC --source winget
 
