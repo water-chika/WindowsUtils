@@ -1,1 +1,1 @@
-Copy-Item powershell_profile.ps1 $PROFILE.AllUsersAllHosts
+Copy-Item powershell_profile.ps1 $PROFILE.CurrentUserAllHosts
