@@ -19,14 +19,14 @@ Set-Service -Name sshd -StartupType 'Automatic'
 # Confirm the Firewall rule is configured. It should be created automatically by setup. Run the following to verify
 if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {
     Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it..."
-    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort Any -Program "%SystemRoot%/System32/OpenSSH/sshd.exe"
 } else {
     Write-Output "Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists."
 }
 
 if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP(public)" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {
     Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP(public)' does not exist, creating it..."
-    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP(public)' -DisplayName 'OpenSSH Server (sshd)(public)' -Profile Any -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP(public)' -DisplayName 'OpenSSH Server (sshd)(public)' -Profile Any -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort Any -Program "%SystemRoot%/System32/OpenSSH/sshd.exe"
 } else {
     Write-Output "Firewall rule 'OpenSSH-Server-In-TCP(public)' has been created and exists."
 }
