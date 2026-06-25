@@ -5,3 +5,4 @@ while (-not (Get-Item $directory)) {
 	$directory = Split-Path -Parent $directory
 }
 Copy-Item powershell_profile.ps1 $PROFILE.CurrentUserAllHosts
+Copy-Item powershell_profile.ps1 $PROFILE
